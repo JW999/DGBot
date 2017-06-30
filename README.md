@@ -1,0 +1,2 @@
+# DGBot
+Discord greeting bot
