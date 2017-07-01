@@ -17,6 +17,13 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
+    await bot.change_presence(game=discord.Game(name="Type " + bot_prefix + "help"))
+
+@bot.event
+async def on_member_join(member):
+    serverChannel = member.server.default_channel
+    msg = "Hello and welcome to the best C++/game dev server on Discord!!! {}".format(member.mention)
+    await bot.send_message(serverChannel, msg)
 
 @bot.command()
 async def hello():
@@ -27,7 +34,6 @@ async def hello():
 async def add(left : int, right : int):
     """Adds two numbers together."""
     await bot.say(left + right)
-
 
 @bot.command()
 async def coinflip():
