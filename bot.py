@@ -5,7 +5,7 @@ import random
 
 # Prefix used to interact with the bot
 bot_prefix = "?"
-bot_token = "MzMwNDczNDM4MjI3NDY0MTky.DDhhBw.NLI31T6GlQ4CWj4GoLWJxsQnBiw"
+bot_token = "Get your own token!!!"
 bot_description = """A bot that greets new users, for now."""
 
 
@@ -21,27 +21,45 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    serverChannel = member.server.default_channel
     msg = "Hello and welcome to the best C++/game dev server on Discord!!! {}".format(member.mention)
-    await bot.send_message(serverChannel, msg)
+    await member.guild.default_channel.send(msg)
 
 @bot.command()
-async def hello():
+async def hello(ctx):
     """Says world"""
-    await bot.say("world")
+    await ctx.send("world")
 
 @bot.command()
-async def add(left : int, right : int):
+async def add(ctx, left : int, right : int):
     """Adds two numbers together."""
-    await bot.say(left + right)
+    try:
+        await ctx.send(left + right)
+    except ValueError:
+        await ctx.send("Invalid input")
+
+@add.error
+async def add_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Invalid input")
+    if isinstance(error, commands.BadArgument):
+        await ctx.send("Invalid input")
 
 @bot.command()
-async def coinflip():
+async def coinflip(ctx, choice : str):
     """A fair 50/50 coin flip"""
+    choices = ["heads", "tails"]
     number = random.randint(1,2)
-    if number == 1:
-        await bot.say("Tails")
+    if choice.lower() in choices:
+        if choice.lower() == choices[number - 1].lower():
+            await ctx.send("Yep that's right, you got {}".format(choices[number - 1].title()))
+        else:
+            await ctx.send("You got rick rolled.")
     else:
-        await bot.say("Heads")
+        await ctx.send("Are you trying to break me? Bastard :triumph:")
+
+@coinflip.error
+async def add_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Where's your input at?")
 
 bot.run(bot_token)
