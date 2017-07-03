@@ -6,6 +6,23 @@ import importlib
 from multiprocessing import Pool, cpu_count
 
 
+# DEFAULT PLUGIN
+def default(name):
+    print("Unknown command!")
+
+
+default_plugin = {
+    "name" : "Default Plugin",
+    "simple_name" : "default",
+    "version" : 1.0,
+    "author" : "Jack Clarke",
+    "description" : "Is executed when no other condition are met, a default case.",
+
+    "code" : {
+        "entry_point" : "test"
+    }
+}
+
 
 
 # LOAD CONFIG FILES
@@ -75,7 +92,10 @@ class PluginManager():
 
 
     def call(self, listen_for, *args, **kwargs):
-        self.func_map[listen_for](*args, **kwargs)
+        try:
+            self.func_map[listen_for](*args, **kwargs)
+        except KeyError:
+            default()
 
 
     def info(self, simple_name):
