@@ -76,11 +76,6 @@ async def help(ctx):
                       "\n\n__**Commands list:**__\n\n",
 
     )
-    #msg.add_field(
-        #name = "__**Commands list:**__",
-        #value = "\u200b",
-        #inline = False,
-    #)
     msg.add_field(
         name = "add:",
         value = "Usage: ?add int1 in2. Adds 2 integer, duh.",
