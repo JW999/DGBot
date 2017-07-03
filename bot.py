@@ -7,7 +7,7 @@ from math import *
 
 # Prefix used to interact with the bot
 bot_prefix = "?"
-bot_token = "user your own token"
+bot_token = "MzMwNDczNDM4MjI3NDY0MTky.DDhhBw.NLI31T6GlQ4CWj4GoLWJxsQnBiw"
 bot_description = """A bot that greets new users, for now."""
 
 bot = commands.Bot(command_prefix = bot_prefix, description = bot_description)
@@ -67,49 +67,59 @@ async def add_error(ctx, error):
 @bot.command()
 async def help(ctx):
     msg = discord.Embed(
-        title = "title123",
+        title = "Welcome to DGBot's help page!",
         colour = 0xe74c3c, #red
-        description = "Testing...\n\n"
-                      "Commands:\n"
-                      "1.asdasd\n"
-                      "2.asdhgasjdgsa\n"
-                      "3. ashdgasjhdas\n"
-                      "-------------------\n\n"
-                      "This bot was created by PornstarName and Jackojc\n"
+        description = "Changelog:\n"
+                      "\n1. Added a help function.\n"
+                      "2. You can now use the challenge command to test your challenge solutions!\n"
+                      "3. You can now use the userinfo command to get someone's Discord information!(Ty NSA shhhh!)\n"
+                      "\n\n__**Commands list:**__\n\n",
+
+    )
+    #msg.add_field(
+        #name = "__**Commands list:**__",
+        #value = "\u200b",
+        #inline = False,
+    #)
+    msg.add_field(
+        name = "add:",
+        value = "Usage: ?add int1 in2. Adds 2 integer, duh.",
+        inline = False,
+    )
+    msg.add_field(
+        name = "coinflip:",
+        value = "Usage: ?coinflip choice. coinflip is a 50/50 head or tails game.\n" +
+                "Enter heads or tails to see what you get!",
+        inline = False,
+    )
+    msg.add_field(
+        name = "hello:",
+        value = "hello is basically a ping functions. It take no arguments",
+        inline = False,
+    )
+    msg.add_field(
+        name = "help",
+        value = "Display this menu.",
+        inline = False,
+    )
+    msg.add_field(
+        name = "userinfo:",
+        value = "Usage: ?userinfo @user.\n" + "Mention a user to get their Discord information.",
+        inline = False,
     )
     msg.set_author(
-        name = "Best bot ever",
+        name = "DGBot",
         icon_url = "https://cdn.pixabay.com/photo/2016/09/15/21/02/alpaca-1672647_960_720.jpg",
-        url = "https://github.com/JW999/DGBot"
+        url = "https://github.com/JW999/DGBot",
     )
-
-    msg.add_field(
-        name = "Title 2",
-        value = "test 123\n"
-                "test456\n",
-        inline = False
-    )
-    msg.add_field(
-        name = "Title 3",
-        value = "test 123\n"
-                "test456\n",
-    )
-    msg.add_field(
-        name = "Title 4",
-        value = "test 123\n"
-                "test456\n",
-    )
-
     msg.set_footer(
-        text = "Made by James and Jack. https://github.com/JW999/DGBot",
-        icon_url = "https://cdn.pixabay.com/photo/2016/09/15/21/02/alpaca-1672647_960_720.jpg"
+        text = "Made by JW999 and Jackojc. https://github.com/JW999/DGBot",
+        icon_url = "https://cdn.pixabay.com/photo/2016/09/15/21/02/alpaca-1672647_960_720.jpg",
     )
-
     msg.set_thumbnail(
-        url = "https://cdn.pixabay.com/photo/2016/09/15/21/02/alpaca-1672647_960_720.jpg"
+        url = "https://cdn.pixabay.com/photo/2016/09/15/21/02/alpaca-1672647_960_720.jpg",
     )
 
-    await ctx.message.delete()
     await ctx.send(embed = msg)
 
 @bot.command()
@@ -132,4 +142,49 @@ async def challenge(ctx, n : int, s : int):
                     summ += i
     await ctx.send(summ)
 
+@bot.command()
+async def userinfo(ctx):
+    try:
+        user = ctx.message.mentions[0]
+    except IndexError:
+        await ctx.send("You didn't mention any users")
+
+    usermsg = discord.Embed(
+        title = ":open_file_folder: User information about {}#{}.".format(user.name, user.discriminator),
+        colour = 0x9b59b6, #purple
+    )
+    usermsg.add_field(
+        name = "Username:",
+        value = user.name,
+        inline = False,
+    )
+    usermsg.add_field(
+        name = "Nickname:",
+        value = user.nick,
+        inline = False,
+    )
+    usermsg.add_field(
+        name = "User ID:",
+        value = user.id,
+        inline = False,
+    )
+    usermsg.add_field(
+        name = "Status",
+        value = user.status,
+        inline = False,
+    )
+    usermsg.add_field(
+        name = "Joined Discord on:",
+        value = str(user.created_at)[:16],
+        inline = False,
+    )
+    usermsg.add_field(
+        name = "Joined server on:",
+        value = str(user.joined_at)[:16],
+        inline = False,
+    )
+    usermsg.set_thumbnail(
+        url = user.avatar_url
+    )
+    await ctx.send(embed = usermsg)
 bot.run(bot_token)
