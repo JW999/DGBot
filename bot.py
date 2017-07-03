@@ -7,7 +7,7 @@ from math import *
 
 # Prefix used to interact with the bot
 bot_prefix = "?"
-bot_token = "MzMwNDczNDM4MjI3NDY0MTky.DDhhBw.NLI31T6GlQ4CWj4GoLWJxsQnBiw"
+bot_token = "yout token here"
 bot_description = """A bot that greets new users, for now."""
 
 bot = commands.Bot(command_prefix = bot_prefix, description = bot_description)
