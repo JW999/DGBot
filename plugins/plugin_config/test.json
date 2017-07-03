@@ -1,0 +1,15 @@
+{
+    "name" : "Test Plugin",
+    "simple_name" : "test_plugin",
+    "version" : 1.0,
+    "author" : "Jack Clarke",
+    "description" : "Does testing stuff",
+
+    "active" : true,
+    "listen_for" : "testing shit",
+
+    "code" : {
+        "file" : "plugins.test",
+        "entry_point" : "test"
+    }
+}
