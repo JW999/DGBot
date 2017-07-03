@@ -7,7 +7,7 @@ from math import *
 
 # Prefix used to interact with the bot
 bot_prefix = "?"
-bot_token = "yout token here"
+bot_token = "MzMwNDczNDM4MjI3NDY0MTky.DDwyTQ.IHLJIbl1Kxu-LRVhoPjyKs9wPC8"
 bot_description = """A bot that greets new users, for now."""
 
 bot = commands.Bot(command_prefix = bot_prefix, description = bot_description)
@@ -66,6 +66,7 @@ async def add_error(ctx, error):
 
 @bot.command()
 async def help(ctx):
+    """Display a message with the latest changelog and current commands."""
     msg = discord.Embed(
         title = "Welcome to DGBot's help page!",
         colour = 0xe74c3c, #red
@@ -126,7 +127,7 @@ async def challenge(ctx, n : int, s : int):
             if k > 1 and all(k % i for i in islice(count(2), int(sqrt(k)-1))):
                 summ += k
     else:
-        #is even
+        # is even
         if s % 2 == 0:
             for i in range(0, n+1):
                 if i % 2 == 0:
@@ -139,6 +140,7 @@ async def challenge(ctx, n : int, s : int):
 
 @bot.command()
 async def userinfo(ctx):
+    """Provides user info for """
     try:
         user = ctx.message.mentions[0]
     except IndexError:
@@ -182,4 +184,23 @@ async def userinfo(ctx):
         url = user.avatar_url
     )
     await ctx.send(embed = usermsg)
+
+@bot.command()
+async def deletemsg(ctx, name:str, n :int):
+    """Delete n messages for a mentioned user"""
+
+    user = ctx.message.mentions[0]  # Get the mentioned user
+
+    counter = 0
+    async for message in ctx.channel.history(limit = 100):
+        if message.author.id == user.id:
+            counter += 1
+
+    await ctx.send(counter)
+
+@deletemsg.error
+async def deletemsgError(ctx, error):
+    if isinstance(error, commands.errors.CommandInvokeError):
+        await ctx.send("You didn't mention any users")
+
 bot.run(bot_token)
