@@ -66,7 +66,7 @@ async def add_error(ctx, error):
 
 @bot.command()
 async def help(ctx):
-    """Display a message with the latest changelog and current commands."""
+    """Disploooay a message with the latest changelog and current commands."""
     msg = discord.Embed(
         title = "Welcome to DGBot's help page!",
         colour = 0xe74c3c, #red
@@ -74,6 +74,7 @@ async def help(ctx):
                       "\n1. Added a help function.\n"
                       "2. You can now use the challenge command to test your challenge solutions!\n"
                       "3. You can now use the userinfo command to get someone's Discord information!(Ty NSA shhhh!)\n"
+                      "4. Admins can now delete a certain member's messages automatically.(You're welcome ;) )"
                       "\n\n__**Commands list:**__\n\n",
 
     )
@@ -89,8 +90,13 @@ async def help(ctx):
         inline = False,
     )
     msg.add_field(
+        name="[Admins only]deletemsg",
+        value="Usage: ?deletemsg @<member> <number of messages>.\nDelete <number of messages> for <member>.",
+        inline=False,
+    )
+    msg.add_field(
         name = "hello:",
-        value = "hello is basically a ping functions. It take no arguments",
+        value = "hello is basically a ping functions. It take no arguments.",
         inline = False,
     )
     msg.add_field(
@@ -105,15 +111,15 @@ async def help(ctx):
     )
     msg.set_author(
         name = "DGBot",
-        icon_url = "https://cdn.pixabay.com/photo/2016/09/15/21/02/alpaca-1672647_960_720.jpg",
+        icon_url = "https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg",
         url = "https://github.com/JW999/DGBot",
     )
     msg.set_footer(
         text = "Made by JW999 and Jackojc. https://github.com/JW999/DGBot",
-        icon_url = "https://cdn.pixabay.com/photo/2016/09/15/21/02/alpaca-1672647_960_720.jpg",
+        icon_url = "https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg",
     )
     msg.set_thumbnail(
-        url = "https://cdn.pixabay.com/photo/2016/09/15/21/02/alpaca-1672647_960_720.jpg",
+        url = "https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg",
     )
 
     await ctx.send(embed = msg)
@@ -186,21 +192,25 @@ async def userinfo(ctx):
     await ctx.send(embed = usermsg)
 
 @bot.command()
-async def deletemsg(ctx, name:str, n :int):
+@commands.has_permissions(administrator=True)
+async def deletemsg(ctx, name :str, n :int):
     """Delete n messages for a mentioned user"""
-
     user = ctx.message.mentions[0]  # Get the mentioned user
+    number_messages = n
 
-    counter = 0
-    async for message in ctx.channel.history(limit = 100):
-        if message.author.id == user.id:
-            counter += 1
+    async for message in ctx.channel.history(limit=1000):
+        if message.author.id == user.id and number_messages != 0:
+            number_messages -= 1
+            await message.delete()
 
-    await ctx.send(counter)
+    await ctx.message.delete()
+
 
 @deletemsg.error
 async def deletemsgError(ctx, error):
-    if isinstance(error, commands.errors.CommandInvokeError):
-        await ctx.send("You didn't mention any users")
+    if isinstance(error, commands.errors.BadArgument) or isinstance(error, commands.errors.MissingRequiredArgument) or isinstance(error, commands.errors.CommandInvokeError):
+        await ctx.send("Usage: {}deletemsg @<member> <number of messages>".format(bot_prefix))
+    if isinstance(error, commands.CheckFailure):
+        await ctx.send("You're not an admin.")
 
 bot.run(bot_token)
