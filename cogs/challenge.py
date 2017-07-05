@@ -11,6 +11,9 @@ class challenge:
 
     @commands.command()
     async def challenge0(self, ctx, n: int, s: int):
+        if n > 30 or s > 30:
+            await ctx.send("Don't break me plox")
+            return
         summ = 0
         # is prime
         if s > 1 and all(s % i for i in itertools.islice(itertools.count(2), int(math.sqrt(s) - 1))):
