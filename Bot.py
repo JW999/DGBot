@@ -58,28 +58,29 @@ async def help(ctx):
         title = "Welcome to DGBot's help page!",
         colour = 0xe74c3c, #red
         description = "Changelog:\n"
-                      "\n1. Added a help function.\n"
-                      "2. You can now use the challenge command to test your challenge solutions!\n"
-                      "3. You can now use the userinfo command to get someone's Discord information!(Ty NSA shhhh!)\n"
-                      "4. Admins can now delete a certain member's messages automatically.(You're welcome ;) )"
-                      "\n\n__**Commands list:**__\n\n",
+                      "\n1. I've added your boring generic flip command!\n"
+                      "2. Admins now have 1 more message deleting option!\n"
+                      "3. The bot's owner can now load and unload modules on the fly!\n"
+                      "4. Much cleaner source code."
+                      "\n\n__**Normie Commands list:**__\n\n",
 
     )
     msg.add_field(
-        name = "add:",
-        value = "Usage: ?add int1 in2. Adds 2 integer, duh.",
-        inline = False,
-    )
-    msg.add_field(
         name = "coinflip:",
-        value = "Usage: {}coinflip choice. coinflip is a 50/50 head or tails game.\n".format(bot_prefix) +
-                "Enter heads or tails to see what you get!",
+        value = "Enter heads or tails to see what you get!\n" +
+                "Usage: {}coinflip choice. coinflip is a 50/50 head or tails game.\n".format(bot_prefix),
         inline = False,
     )
     msg.add_field(
-        name="[Admins only]deletemsg",
-        value="Usage: {}deletemsg @<member> <number of messages>.\nDelete <number of messages> for <member>.".format(bot_prefix),
-        inline=False,
+        name = "challenge0:",
+        value = "challenge0 is a command you can use to test your solution to this week's programming challenge!" +
+                "\nUsage: {}challenge0 <required input>.".format(bot_prefix),
+        inline = False
+    )
+    msg.add_field(
+        name = "flip:",
+        value = "Spits out heads or tails.\n" +"Usage: {}flip <no arguments needed>.".format(bot_prefix),
+        inline = False
     )
     msg.add_field(
         name = "hello:",
@@ -87,13 +88,29 @@ async def help(ctx):
         inline = False,
     )
     msg.add_field(
-        name = "help",
+        name = "help:",
         value = "Display this menu.",
         inline = False,
     )
     msg.add_field(
         name = "userinfo:",
-        value = "Usage: {}userinfo @user.\n".format(bot_prefix) + "Mention a user to get their Discord information.".format(bot_prefix),
+        value = "Mention a user to get their Discord information.".format(bot_prefix) +
+                "\nUsage: {}userinfo <mentioned user>.".format(bot_prefix),
+        inline = False,
+    )
+    msg.add_field(
+        name = "\u200b",
+        value= "__**Admin Commands list:**__",
+        inline = False,
+    )
+    msg.add_field(
+        name = "delete:",
+        value = "delete is a command that's used to either delete a certain member's messages, or n amount of messages inside a channel.\n" +
+                "In order to use any of these feature, you'll have to use one of the two subcommands:\n" +
+                "   **1. msg: deletes n amount of messages.**\n" +
+                "         Usage: {}delete msg <number of messages>.\n".format(bot_prefix) +
+                "   **2. usermsg: deletes n amount of messages for a mentioned user.**\n"+
+                "         Usage: {}delete usermsg <mentioned user> <number of messages>.".format(bot_prefix),
         inline = False,
     )
     msg.set_author(
