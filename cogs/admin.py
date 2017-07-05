@@ -18,7 +18,7 @@ class adminCommands:
         number_messages = n
 
         async for message in ctx.channel.history(limit=1000):
-            if ctx.message == message:
+            if ctx.message.id == message.id:
                 pass
             if message.author.id == user.id and number_messages != 0:
                 number_messages -= 1
