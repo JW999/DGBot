@@ -1,9 +1,9 @@
 import discord
 from discord.ext import commands
-from random
+import random
 
 
-class random:
+class randomCommands:
     def __init__(self, bot):
         self.bot = bot
 
@@ -16,15 +16,26 @@ class random:
             if choice.lower() == choices[number - 1].lower():
                 await ctx.send("Yep that's right, you got {}".format(choices[number - 1].title()))
             else:
-                await ctx.send("You got rick rolled.")
+                await ctx.send("Nope.")
         else:
             await ctx.send("Are you trying to break me? Bastard :triumph:")
 
     @coinflip.error
-    async def add_error(self, ctx, error):
+    async def coinflip_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("Where's your input at?")
+            await ctx.send("Input please?")
+
+
+    @commands.command()
+    async def flip(self, ctx):
+        "Fair 50/50 heads or tails"
+        number = random.randint(1, 2)
+
+        if number == 1:
+            await ctx.send("Heads")
+        else:
+            await ctx.send("Tails")
 
 
 def setup(bot):
-    bot.add_cog(random(bot))
+    bot.add_cog(randomCommands(bot))
