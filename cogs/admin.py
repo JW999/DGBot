@@ -23,6 +23,8 @@ class adminCommands:
             if message.author.id == user.id and number_messages != 0:
                 number_messages -= 1
                 await message.delete()
+            else:
+                break
 
         await ctx.message.delete()
 
@@ -46,6 +48,8 @@ class adminCommands:
             if number_messages != 0:
                 number_messages -= 1
                 await message.delete()
+            else:
+                break
 
         await ctx.message.delete()
 

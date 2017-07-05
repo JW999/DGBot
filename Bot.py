@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import time
 
 # Prefix used to interact with the bot
 bot_prefix = "?"
@@ -9,7 +10,8 @@ bot_description = """An all-purpose bot written for the Hopson community server.
 startup_extensions = ["cogs.members",
                       "cogs.RNG",
                       "cogs.admin",
-                      "cogs.challenge"]
+                      "cogs.challenge",
+                      "cogs.Misc"]
 bot = commands.Bot(command_prefix = bot_prefix, description = bot_description)
 bot.remove_command("help")
 
@@ -130,11 +132,14 @@ async def help(ctx):
 
 
 if __name__ == "__main__":
+    print("Loading modules....")
     for extension in startup_extensions:
         try:
             bot.load_extension(extension)
         except Exception as e:
             exc = '{}: {}'.format(type(e).__name__, e)
             print('Failed to load extension {}\n{}'.format(extension, exc))
+    time.sleep(2)
+    print("Connecting to Discord....")
 
     bot.run(bot_token)
