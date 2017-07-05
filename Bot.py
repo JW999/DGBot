@@ -50,7 +50,7 @@ async def unload(ctx, extension_name :str):
 @bot.command()
 async def hello(ctx):
     """Ping command"""
-    ctx.send("world.")
+    await ctx.send("world.")
 
 
 @bot.command()
@@ -76,7 +76,7 @@ async def help(ctx):
     msg.add_field(
         name = "challenge0:",
         value = "challenge0 is a command you can use to test your solution to this week's programming challenge!" +
-                "\nUsage: {}challenge0 <required input>.".format(bot_prefix),
+                "\nUsage: {}challenge0 <required input>. NOTE: The maximum value allowed for either integers is 30.".format(bot_prefix),
         inline = False
     )
     msg.add_field(
