@@ -32,7 +32,7 @@ class adminCommands:
     async def usermsg_error(ctx, error):
         if isinstance(error, commands.errors.BadArgument) or isinstance(error,commands.errors.MissingRequiredArgument) or isinstance(error, commands.errors.CommandInvokeError):
             await ctx.send("Check the help page for usage instructions.")
-        if isinstance(error, commands.CheckFailure):
+        if isinstance(error, commands.errors.CheckFailure):
             await ctx.send("You're not an admin.")
 
 
@@ -52,6 +52,13 @@ class adminCommands:
                 break
 
         await ctx.message.delete()
+
+    @msg.error
+    async def msg_error(ctx, error):
+        if isinstance(error, commands.errors.BadArgument) or isinstance(error,commands.errors.MissingRequiredArgument) or isinstance(error, commands.errors.CommandInvokeError):
+            await ctx.send("Check the help page for usage instructions.")
+        if isinstance(error, commands.errors.CheckFailure):
+            await ctx.send("You're not an admin.")
 
 
 

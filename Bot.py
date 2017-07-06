@@ -1,10 +1,15 @@
 import discord
 from discord.ext import commands
+import json
 import time
+
+# Get top secret bot token
+with open("APIKey.json") as f:
+    API = json.load(f)
 
 # Prefix used to interact with the bot
 bot_prefix = "?"
-bot_token = "MzMwNDczNDM4MjI3NDY0MTky.DDwyTQ.IHLJIbl1Kxu-LRVhoPjyKs9wPC8"
+bot_token = API['Token']
 bot_description = """An all-purpose bot written for the Hopson community server."""
 
 startup_extensions = ["cogs.members",
