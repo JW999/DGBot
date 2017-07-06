@@ -41,7 +41,7 @@ class misc:
             url = ctx.message.mentions[0].avatar_url
 
         # Download the image
-        img_name = "img1.png"
+        img_name = "{}.png".format(url[url.rfind("/")+1:url.rfind(".")])
         await self.download_img(ctx, url, img_name)
 
         # Invert the image
