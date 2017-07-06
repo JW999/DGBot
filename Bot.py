@@ -49,8 +49,20 @@ async def load_error(ctx, error):
 @bot.command()
 @commands.is_owner()
 async def unload(ctx, extension_name :str):
-    bot.unload_extension(extension_name)
-    await ctx.send("{} was successfully unloaded.".format(extension_name))
+    if bot.get_cog(extension_name[extension_name.rfind(".")+1:]):
+        bot.unload_extension(extension_name)
+        await ctx.send("{} was successfully unloaded.".format(extension_name))
+
+    else:
+        await ctx.send("Could not unload {}, module not found.".format(extension_name))
+
+@unload.error
+async def unload_error(ctx, error):
+    """Handle load's errors"""
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Usage: {}unload(<extension name>).".format(bot_prefix))
+    if isinstance(error, commands.errors.NotOwner):
+        await ctx.send("You're not my daddy, only daddy can use this function.")
 
 
 @bot.command()
@@ -66,11 +78,10 @@ async def help(ctx):
         title = "Welcome to DGBot's help page!",
         colour = 0xe74c3c, #red
         description = "Changelog:\n"
-                      "\n1. I've added your boring generic flip command!\n"
-                      "2. Admins now have 1 more message deleting option!\n"
-                      "3. The bot's owner can now load and unload modules on the fly!\n"
-                      "4. Much cleaner source code."
-                      "\n\n__**Normie Commands list:**__\n\n",
+                      "\n1. Fixed a bug were I was greeting users in the wrong channel.\n"
+                      "2. You can now invert images, more img related commands to come.\n"
+                      "3. A vite module has been added, where you can ask yes or now question or create a poll!.\n"
+                      "\n\n__**Normies Commands list:**__\n\n",
 
     )
     msg.add_field(
@@ -101,14 +112,34 @@ async def help(ctx):
         inline = False,
     )
     msg.add_field(
+        name="img:",
+        value="img is a command that's used to add effects to images.\n" +
+              "Subcommands:\n" +
+              "   **1. invert: inverts the colours of a certain image. You can tag your friends to invert their avatars,**" + ""
+              " or use an image's url.\n" +
+              "         Usage: {}img invert <url or mentioned user>. **NOTE:**The maximum number of choices allowed is 10.".format(
+                  bot_prefix),
+        inline=False,
+    )
+    msg.add_field(
         name = "userinfo:",
         value = "Mention a user to get their Discord information.".format(bot_prefix) +
                 "\nUsage: {}userinfo <mentioned user>.".format(bot_prefix),
         inline = False,
     )
     msg.add_field(
+        name="vote:",
+        value="Vote is a command that's used to create polls.\n" +
+              "Subcommands:\n" +
+              "   **1. poll: Creates a poll(duh) where people can vote using reactions**\n" +
+              "         Usage: {}vote poll <choices>. **NOTE:**The maximum number of choices allowed is 10.".format(bot_prefix) +
+              "   **2. YN: Creates a question where people can vote 'yes' or 'no', also using reaction.**\n" +
+              '         Usage: {}YN "<Question>". **NOTE:**Your question must be enclosed with double quotes.'.format(bot_prefix),
+        inline=False,
+    )
+    msg.add_field(
         name = "\u200b",
-        value= "__**Admin Commands list:**__",
+        value= "__**Admins Commands list:**__",
         inline = False,
     )
     msg.add_field(
