@@ -1,11 +1,12 @@
 import aiohttp
 import asyncio
+import async_timeout
 import discord
 from discord.ext import commands
+import os
 from PIL import Image
 from PIL import ImageOps
-import async_timeout
-import os
+
 
 class misc:
     def __init__(self, bot):
@@ -44,6 +45,9 @@ class misc:
             await ctx.send("Image is too big.")
             os.remove(img_name)
             return
+        except ValueError:
+            await ctx.send("Invalid link.")
+            return
 
         # Invert the image
         try:
@@ -70,6 +74,12 @@ class misc:
         image.save(img_name)
         await ctx.channel.send(file=discord.File(img_name))
         os.remove(img_name)
+
+    @invert.error
+    async def inver_error(self, ctx, error):
+        if isinstance(error, commands.errors.MissingRequiredArgument):
+            await ctx.send("Are you expecting me to make an image out of thin air?")
+
 
 def setup(bot):
     bot.add_cog(misc(bot))

@@ -16,7 +16,8 @@ startup_extensions = ["cogs.members",
                       "cogs.RNG",
                       "cogs.admin",
                       "cogs.challenge",
-                      "cogs.Misc"]
+                      "cogs.Misc",
+                      "cogs.vote",]
 bot = commands.Bot(command_prefix = bot_prefix, description = bot_description)
 bot.remove_command("help")
 
