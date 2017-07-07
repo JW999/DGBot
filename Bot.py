@@ -79,8 +79,8 @@ async def help(ctx):
         colour = 0xe74c3c, #red
         description = "Changelog:\n"
                       "\n1. Fixed a bug were I was greeting users in the wrong channel.\n"
-                      "2. You can now invert images, more img related commands to come.\n"
-                      "3. A vite module has been added, where you can ask yes or now question or create a poll!.\n"
+                      "2. You can now invert images. more img related commands coming soon.\n"
+                      "3. A vote module where you can ask yes or no questions, or create a poll has finally been added!\n"
                       "\n\n__**Normies Commands list:**__\n\n",
 
     )
@@ -115,9 +115,9 @@ async def help(ctx):
         name="img:",
         value="img is a command that's used to add effects to images.\n" +
               "Subcommands:\n" +
-              "   **1. invert: inverts the colours of a certain image. You can tag your friends to invert their avatars,**" + ""
-              " or use an image's url.\n" +
-              "         Usage: {}img invert <url or mentioned user>. **NOTE:**The maximum number of choices allowed is 10.".format(
+              "   **1. invert: inverts the colours of a certain image. You can tag your friends to invert their avatars,**" +
+              " **or use an image's url.**\n" +
+              "         Usage: {}img invert <url or mentioned user>.".format(
                   bot_prefix),
         inline=False,
     )
@@ -131,10 +131,10 @@ async def help(ctx):
         name="vote:",
         value="Vote is a command that's used to create polls.\n" +
               "Subcommands:\n" +
-              "   **1. poll: Creates a poll(duh) where people can vote using reactions**\n" +
-              "         Usage: {}vote poll <choices>. **NOTE:**The maximum number of choices allowed is 10.".format(bot_prefix) +
-              "   **2. YN: Creates a question where people can vote 'yes' or 'no', also using reaction.**\n" +
-              '         Usage: {}YN "<Question>". **NOTE:**Your question must be enclosed with double quotes.'.format(bot_prefix),
+              "   **1. poll: Creates a poll(duh) where people can vote using reactions.**\n" +
+              "         Usage: {}vote poll <choices>. **NOTE:** The maximum number of choices allowed is 10.\n".format(bot_prefix) +
+              "   **2. YN: Creates a question where people can vote 'yes' or 'no' to, also using reactions.**\n" +
+              '         Usage: {}YN "<Question>". **NOTE:** Your question must be enclosed with double quotes.'.format(bot_prefix),
         inline=False,
     )
     msg.add_field(
