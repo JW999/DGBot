@@ -1,5 +1,5 @@
-import discord
 from discord.ext import commands
+import asyncio
 
 
 class role:
@@ -31,7 +31,7 @@ class role:
             if role not in self.roles_list:  # Invalid role
                 reply += "❌ {} is not a valid role.\n".format(role)
                 continue
-            if role in user_roles:  # Checks if user already has role1
+            if role in user_roles:  # Checks if user already has role
                 reply += "❌ You already have the role {}.\n".format(role)
                 continue
 
@@ -40,6 +40,7 @@ class role:
                 if role == instance.name:
                     role = instance
             await ctx.author.add_roles(role)
+            await asyncio.sleep(0.1)
             reply += "✅ {} has been added successfully.\n".format(role)
 
         await ctx.send(reply)
@@ -66,6 +67,7 @@ class role:
                 if role == instance.name:
                     role = instance
             await ctx.author.remove_roles(role)
+            await asyncio.sleep(0.1)
             reply += "✅ {} has been removed successfully.\n".format(role)
 
         await ctx.send(reply)
