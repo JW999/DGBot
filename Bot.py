@@ -17,7 +17,8 @@ startup_extensions = ["cogs.members",
                       "cogs.admin",
                       "cogs.challenge",
                       "cogs.Misc",
-                      "cogs.vote",]
+                      "cogs.vote",
+                      "cogs.roles",]
 bot = commands.Bot(command_prefix = bot_prefix, description = bot_description)
 bot.remove_command("help")
 
@@ -77,7 +78,7 @@ async def help(ctx):
     msg = discord.Embed(
         title = "Welcome to DGBot's help page!",
         colour = 0xe74c3c, #red
-        description = "Changelog:\n"
+        description = "\nChangelog:\n"
                       "\n1. Fixed a bug were I was greeting users in the wrong channel.\n"
                       "2. You can now invert images. more img related commands coming soon.\n"
                       "3. A vote module where you can ask yes or no questions, or create a poll has finally been added!\n"
@@ -93,48 +94,59 @@ async def help(ctx):
     msg.add_field(
         name = "challenge0:",
         value = "challenge0 is a command you can use to test your solution to this week's programming challenge!" +
-                "\nUsage: {}challenge0 <required input>. NOTE: The maximum value allowed for either integers is 30.".format(bot_prefix),
+                "\nUsage: {}challenge0 <required input>. NOTE: The maximum value allowed for either integers is 30.\n".format(bot_prefix),
         inline = False
     )
     msg.add_field(
         name = "flip:",
-        value = "Spits out heads or tails.\n" +"Usage: {}flip <no arguments needed>.".format(bot_prefix),
+        value = "Spits out heads or tails.\n" +"Usage: {}flip <no arguments needed>.\n".format(bot_prefix),
         inline = False
     )
     msg.add_field(
         name = "hello:",
-        value = "hello is basically a ping functions. It take no arguments.",
+        value = "hello is basically a ping functions. It take no arguments.\n",
         inline = False,
     )
     msg.add_field(
         name = "help:",
-        value = "Display this menu.",
+        value = "Display this menu.\n",
         inline = False,
     )
     msg.add_field(
         name="img:",
         value="img is a command that's used to add effects to images.\n" +
-              "Subcommands:\n" +
+              "__Subcommands__:\n" +
               "   **1. invert: inverts the colours of a certain image. You can tag your friends to invert their avatars,**" +
               " **or use an image's url.**\n" +
-              "         Usage: {}img invert <url or mentioned user>.".format(
+              "         Usage: {}img invert <url or mentioned user>.\n".format(
                   bot_prefix),
         inline=False,
     )
     msg.add_field(
+        name = "roles:",
+        value = "roles is used to either add or remove specified roles from the caller. You can call roles without " +
+                "any subcommands to get a list of available roles.\n"+
+                "__Subcommands__:\n" +
+                "   **1. add: adds specified roles.**\n"+
+                "       Usage: {}roles add <roles>\n".format(bot_prefix) +
+                "   **2. remove: removes specified roles.**\n" +
+                "       Usage: {}roles add <roles>\n".format(bot_prefix),
+        inline = False
+    )
+    msg.add_field(
         name = "userinfo:",
         value = "Mention a user to get their Discord information.".format(bot_prefix) +
-                "\nUsage: {}userinfo <mentioned user>.".format(bot_prefix),
+                "\nUsage: {}userinfo <mentioned user>.\n".format(bot_prefix),
         inline = False,
     )
     msg.add_field(
         name="vote:",
         value="Vote is a command that's used to create polls.\n" +
-              "Subcommands:\n" +
+              "__Subcommands__:\n" +
               "   **1. poll: Creates a poll(duh) where people can vote using reactions.**\n" +
               "         Usage: {}vote poll <choices>. **NOTE:** The maximum number of choices allowed is 10.\n".format(bot_prefix) +
               "   **2. YN: Creates a question where people can vote 'yes' or 'no' to, also using reactions.**\n" +
-              '         Usage: {}YN "<Question>". **NOTE:** Your question must be enclosed with double quotes.'.format(bot_prefix),
+              '         Usage: {}YN "<Question>". **NOTE:** Your question must be enclosed with double quotes.\n'.format(bot_prefix),
         inline=False,
     )
     msg.add_field(

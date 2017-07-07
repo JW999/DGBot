@@ -20,11 +20,13 @@ class adminCommands:
         async for message in ctx.channel.history(limit=1000):
             if ctx.message.id == message.id:
                 continue
-            if message.author.id == user.id and number_messages != 0:
-                number_messages -= 1
-                await message.delete()
-            else:
-                break
+            if message.author.id == user.id:
+                if number_messages != 0:
+                    number_messages -= 1
+                    await message.delete()
+                else:
+                    break
+
 
         await ctx.message.delete()
 
