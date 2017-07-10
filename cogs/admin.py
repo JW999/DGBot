@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 
-class adminCommands:
+
+class admin:
     """This class includes admin only commands"""
     def __init__(self, bot):
         self.bot = bot
@@ -65,4 +66,4 @@ class adminCommands:
 
 
 def setup(bot):
-    bot.add_cog(adminCommands(bot))
+    bot.add_cog(admin(bot))

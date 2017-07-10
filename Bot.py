@@ -12,11 +12,11 @@ bot_prefix = "?"
 bot_token = API['Token']
 bot_description = """An all-purpose bot written for the Hopson community server."""
 
-startup_extensions = ["cogs.members",
-                      "cogs.RNG",
+startup_extensions = ["cogs.member",
+                      "cogs.rng",
                       "cogs.admin",
                       "cogs.challenge",
-                      "cogs.Misc",
+                      "cogs.misc",
                       "cogs.vote",
                       "cogs.roles",]
 bot = commands.Bot(command_prefix = bot_prefix, description = bot_description)

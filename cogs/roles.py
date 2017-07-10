@@ -2,7 +2,7 @@ from discord.ext import commands
 import asyncio
 
 
-class role:
+class roles:
     def __init__(self, bot):
         self.bot = bot
         # Available roles
@@ -74,4 +74,4 @@ class role:
 
 
 def setup(bot):
-    bot.add_cog(role(bot))
+    bot.add_cog(roles(bot))

@@ -3,7 +3,7 @@ from discord.ext import commands
 import random
 
 
-class randomCommands:
+class rng:
     def __init__(self, bot):
         self.bot = bot
 
@@ -38,4 +38,4 @@ class randomCommands:
 
 
 def setup(bot):
-    bot.add_cog(randomCommands(bot))
+    bot.add_cog(rng(bot))
