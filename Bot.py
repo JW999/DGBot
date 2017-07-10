@@ -28,7 +28,7 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    await bot.change_presence(game=discord.Game(name="Type " + bot_prefix + "help"))
+    await bot.change_presence(game=discord.Game(name="Type "+bot_prefix+"help"))
 
 @bot.command()
 @commands.is_owner()
@@ -76,41 +76,41 @@ async def hello(ctx):
 async def help(ctx):
     """Display a message with the latest changelog and current commands."""
     msg = discord.Embed(
-        title = "Welcome to HopBot's help page!",
-        colour = 0xe74c3c, #red
-        description = "\nChangelog:\n"
+        title="Welcome to HopBot's help page!",
+        colour=discord.Color.red(),
+        description="\nChangelog:\n"
                       "\n1. Fixed a bug were I was greeting users in the wrong channel.\n"
                       "2. You can now invert images. more img related commands coming soon.\n"
                       "3. A vote module where you can ask yes or no questions, or create a poll has finally been added!\n"
-                      "\n\n__**Normies Commands list:**__\n\n",
+                      "\n\n__**Normies Commands list:**__\n\n"
 
     )
     msg.add_field(
-        name = "coinflip:",
-        value = "Enter heads or tails to see what you get!\n" +
+        name="coinflip:",
+        value="Enter heads or tails to see what you get!\n" +
                 "Usage: {}coinflip choice. coinflip is a 50/50 head or tails game.\n".format(bot_prefix),
-        inline = False,
+        inline=False
     )
     msg.add_field(
-        name = "challenge0:",
-        value = "challenge0 is a command you can use to test your solution to this week's programming challenge!" +
+        name="challenge0:",
+        value="challenge0 is a command you can use to test your solution to this week's programming challenge!" +
                 "\nUsage: {}challenge0 <required input>. NOTE: The maximum value allowed for either integers is 30.\n".format(bot_prefix),
-        inline = False
+        inline=False
     )
     msg.add_field(
-        name = "flip:",
-        value = "Spits out heads or tails.\n" +"Usage: {}flip <no arguments needed>.\n".format(bot_prefix),
-        inline = False
+        name="flip:",
+        value="Spits out heads or tails.\n" +"Usage: {}flip <no arguments needed>.\n".format(bot_prefix),
+        inline=False
     )
     msg.add_field(
-        name = "hello:",
-        value = "hello is basically a ping functions. It take no arguments.\n",
-        inline = False,
+        name="hello:",
+        value="hello is basically a ping functions. It take no arguments.\n",
+        inline=False
     )
     msg.add_field(
         name = "help:",
-        value = "Display this menu.\n",
-        inline = False,
+        value="Display this menu.\n",
+        inline=False
     )
     msg.add_field(
         name="img:",
@@ -120,24 +120,24 @@ async def help(ctx):
               " **or use an image's url.**\n" +
               "         Usage: {}img invert <url or mentioned user>.\n".format(
                   bot_prefix),
-        inline=False,
+        inline=False
     )
     msg.add_field(
-        name = "roles:",
-        value = "roles is used to either add or remove specified roles from the caller. You can call roles without " +
+        name="roles:",
+        value="roles is used to either add or remove specified roles from the caller. You can call roles without " +
                 "any subcommands to get a list of available roles.\n"+
                 "__Subcommands__:\n" +
                 "   **1. add: adds specified roles.**\n"+
                 "       Usage: {}roles add <roles>\n".format(bot_prefix) +
                 "   **2. remove: removes specified roles.**\n" +
                 "       Usage: {}roles add <roles>\n".format(bot_prefix),
-        inline = False
+        inline=False
     )
     msg.add_field(
         name = "userinfo:",
-        value = "Mention a user to get their Discord information.".format(bot_prefix) +
+        value="Mention a user to get their Discord information.".format(bot_prefix) +
                 "\nUsage: {}userinfo <mentioned user>.\n".format(bot_prefix),
-        inline = False,
+        inline=False
     )
     msg.add_field(
         name="vote:",
@@ -147,37 +147,37 @@ async def help(ctx):
               "         Usage: {}vote poll <choices>. **NOTE:** The maximum number of choices allowed is 10.\n".format(bot_prefix) +
               "   **2. YN: Creates a question where people can vote 'yes' or 'no' to, also using reactions.**\n" +
               '         Usage: {}YN <Question>.\n'.format(bot_prefix),
-        inline=False,
+        inline=False
     )
     msg.add_field(
-        name = "\u200b",
-        value= "__**Admins Commands list:**__",
-        inline = False,
+        name="\u200b",
+        value="__**Admins Commands list:**__",
+        inline=False
     )
     msg.add_field(
-        name = "delete:",
-        value = "delete is a command that's used to either delete a certain member's messages, or n amount of messages inside a channel.\n" +
+        name="delete:",
+        value="delete is a command that's used to either delete a certain member's messages, or n amount of messages inside a channel.\n" +
                 "In order to use any of these feature, you'll have to use one of the two subcommands:\n" +
                 "   **1. msg: deletes n amount of messages.**\n" +
                 "         Usage: {}delete msg <number of messages>.\n".format(bot_prefix) +
                 "   **2. usermsg: deletes n amount of messages for a mentioned user.**\n"+
                 "         Usage: {}delete usermsg <mentioned user> <number of messages>.".format(bot_prefix),
-        inline = False,
+        inline=False
     )
     msg.set_author(
-        name = "Hopbot",
-        icon_url = "https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg",
-        url = "https://github.com/JW999/DGBot",
+        name="Hopbot",
+        icon_url="https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg",
+        url="https://github.com/JW999/DGBot"
     )
     msg.set_footer(
-        text = "Made by JW999 and Jackojc. https://github.com/JW999/DGBot",
-        icon_url = "https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg",
+        text ="Made by JW999 and Jackojc. https://github.com/JW999/DGBot",
+        icon_url="https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg"
     )
     msg.set_thumbnail(
-        url = "https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg",
+        url="https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg"
     )
 
-    await ctx.send(embed = msg)
+    await ctx.send(embed=msg)
 
 
 if __name__ == "__main__":
@@ -188,7 +188,6 @@ if __name__ == "__main__":
         except Exception as e:
             exc = '{}: {}'.format(type(e).__name__, e)
             print('Failed to load extension {}\n{}'.format(extension, exc))
-    time.sleep(2)
     print("Connecting to Discord....")
 
     bot.run(bot_token)
