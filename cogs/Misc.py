@@ -52,6 +52,13 @@ class misc:
         # Invert the image
         try:
             image = Image.open(img_name)
+
+            width, height = image.size
+            if (width * height) > 89478485:  # Checks if image is too big
+                await ctx.send("Image is too big.")
+                os.remove(img_name)
+                return
+
             if image.mode == "RGBA":
                 image.load()
                 r, g, b, a = image.split()
