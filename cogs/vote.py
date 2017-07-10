@@ -31,7 +31,8 @@ class vote:
             await msg.add_reaction(emoji)
 
     @vote.command()
-    async def YN(self, ctx, question :str):
+    async def YN(self, ctx, *, question):
+        print(question)
         """A yes or no vote."""
         emojis = ['✅', '❌']
 

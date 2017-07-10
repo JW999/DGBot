@@ -76,7 +76,7 @@ async def hello(ctx):
 async def help(ctx):
     """Display a message with the latest changelog and current commands."""
     msg = discord.Embed(
-        title = "Welcome to DGBot's help page!",
+        title = "Welcome to HopBot's help page!",
         colour = 0xe74c3c, #red
         description = "\nChangelog:\n"
                       "\n1. Fixed a bug were I was greeting users in the wrong channel.\n"
@@ -146,7 +146,7 @@ async def help(ctx):
               "   **1. poll: Creates a poll(duh) where people can vote using reactions.**\n" +
               "         Usage: {}vote poll <choices>. **NOTE:** The maximum number of choices allowed is 10.\n".format(bot_prefix) +
               "   **2. YN: Creates a question where people can vote 'yes' or 'no' to, also using reactions.**\n" +
-              '         Usage: {}YN "<Question>". **NOTE:** Your question must be enclosed with double quotes.\n'.format(bot_prefix),
+              '         Usage: {}YN <Question>.\n'.format(bot_prefix),
         inline=False,
     )
     msg.add_field(
@@ -165,7 +165,7 @@ async def help(ctx):
         inline = False,
     )
     msg.set_author(
-        name = "DGBot",
+        name = "Hopbot",
         icon_url = "https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg",
         url = "https://github.com/JW999/DGBot",
     )
