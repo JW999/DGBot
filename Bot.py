@@ -8,19 +8,19 @@ with open("APIKey.json") as f:
     API = json.load(f)
 
 # Prefix used to interact with the bot
-bot_prefix = "?"
-bot_token = API['Token']
+prefix = "?"
+token = API['Token']
 bot_description = """An all-purpose bot written for the Hopson community server."""
 
-startup_extensions = ["cogs.member",
-                      "cogs.rng",
-                      "cogs.admin",
-                      "cogs.challenge",
-                      "cogs.misc",
-                      "cogs.vote",
-                      "cogs.roles",]
-bot = commands.Bot(command_prefix = bot_prefix, description = bot_description)
-bot.remove_command("help")
+startup_extensions = ["member",
+                      "rng",
+                      "admin",
+                      "challenge",
+                      "misc",
+                      "vote",
+                      "roles"]
+bot = commands.Bot(command_prefix=prefix, description=bot_description)
+bot.remove_command('help')
 
 @bot.event
 async def on_ready():
@@ -28,20 +28,20 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    await bot.change_presence(game=discord.Game(name="Type "+bot_prefix+"help"))
+    await bot.change_presence(game=discord.Game(name=f'Type {prefix}help'))
 
 @bot.command()
 @commands.is_owner()
 async def load(ctx, extension_name :str):
     """Load an extension"""
     bot.load_extension(extension_name)
-    await ctx.send("{} was successfully loaded.".format(extension_name))
+    await ctx.send(f"{extension_name} was successfully loaded.")
 
 @load.error
 async def load_error(ctx, error):
     """Handle load's errors"""
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Usage: {}load(<extension name>).".format(bot_prefix))
+        await ctx.send(f"Usage: {prefix}load(<extension name>).")
     if isinstance(error, commands.errors.CommandInvokeError):
         await ctx.send("Module not found.")
     if isinstance(error, commands.errors.NotOwner):
@@ -52,16 +52,16 @@ async def load_error(ctx, error):
 async def unload(ctx, extension_name :str):
     if bot.get_cog(extension_name[extension_name.rfind(".")+1:]):
         bot.unload_extension(extension_name)
-        await ctx.send("{} was successfully unloaded.".format(extension_name))
+        await ctx.send(f"{extension_name} was successfully unloaded.")
 
     else:
-        await ctx.send("Could not unload {}, module not found.".format(extension_name))
+        await ctx.send(f"Could not unload {extension_name}, module not found.")
 
 @unload.error
 async def unload_error(ctx, error):
     """Handle load's errors"""
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Usage: {}unload(<extension name>).".format(bot_prefix))
+        await ctx.send(f"Usage: {prefix}unload(<extension name>).")
     if isinstance(error, commands.errors.NotOwner):
         await ctx.send("You're not my daddy, only daddy can use this function.")
 
@@ -83,23 +83,22 @@ async def help(ctx):
                       "2. You can now invert images. more img related commands coming soon.\n"
                       "3. A vote module where you can ask yes or no questions, or create a poll has finally been added!\n"
                       "\n\n__**Normies Commands list:**__\n\n"
-
     )
     msg.add_field(
         name="coinflip:",
         value="Enter heads or tails to see what you get!\n" +
-                "Usage: {}coinflip choice. coinflip is a 50/50 head or tails game.\n".format(bot_prefix),
+                f"Usage: {prefix}coinflip choice. coinflip is a 50/50 head or tails game.\n",
         inline=False
     )
     msg.add_field(
         name="challenge0:",
         value="challenge0 is a command you can use to test your solution to this week's programming challenge!" +
-                "\nUsage: {}challenge0 <required input>. NOTE: The maximum value allowed for either integers is 30.\n".format(bot_prefix),
+                f"\nUsage: {prefix}challenge0 <required input>. NOTE: The maximum value allowed for either integers is 30.\n",
         inline=False
     )
     msg.add_field(
         name="flip:",
-        value="Spits out heads or tails.\n" +"Usage: {}flip <no arguments needed>.\n".format(bot_prefix),
+        value=f"Spits out heads or tails.\n" +"Usage: {prefix}flip <no arguments needed>.\n",
         inline=False
     )
     msg.add_field(
@@ -118,8 +117,7 @@ async def help(ctx):
               "__Subcommands__:\n" +
               "   **1. invert: inverts the colours of a certain image. You can tag your friends to invert their avatars,**" +
               " **or use an image's url.**\n" +
-              "         Usage: {}img invert <url or mentioned user>.\n".format(
-                  bot_prefix),
+              f"         Usage: {prefix}img invert <url or mentioned user>.\n",
         inline=False
     )
     msg.add_field(
@@ -128,15 +126,15 @@ async def help(ctx):
                 "any subcommands to get a list of available roles.\n"+
                 "__Subcommands__:\n" +
                 "   **1. add: adds specified roles.**\n"+
-                "       Usage: {}roles add <roles>\n".format(bot_prefix) +
+                f"       Usage: {prefix}roles add <roles>\n" +
                 "   **2. remove: removes specified roles.**\n" +
-                "       Usage: {}roles add <roles>\n".format(bot_prefix),
+                f"       Usage: {prefix}roles add <roles>\n",
         inline=False
     )
     msg.add_field(
         name = "userinfo:",
-        value="Mention a user to get their Discord information.".format(bot_prefix) +
-                "\nUsage: {}userinfo <mentioned user>.\n".format(bot_prefix),
+        value="Mention a user to get their Discord information."+
+                f"\nUsage: {prefix}userinfo <mentioned user>.\n",
         inline=False
     )
     msg.add_field(
@@ -144,9 +142,9 @@ async def help(ctx):
         value="Vote is a command that's used to create polls.\n" +
               "__Subcommands__:\n" +
               "   **1. poll: Creates a poll(duh) where people can vote using reactions.**\n" +
-              "         Usage: {}vote poll <choices>. **NOTE:** The maximum number of choices allowed is 10.\n".format(bot_prefix) +
-              "   **2. YN: Creates a question where people can vote 'yes' or 'no' to, also using reactions.**\n" +
-              '         Usage: {}YN <Question>.\n'.format(bot_prefix),
+              f"         Usage: {prefix}vote poll <choices>. **NOTE:** The maximum number of choices allowed is 10.\n"+
+              "   **2. YN: Creates a question where people can vote 'yes' or 'no' to, also using reactions.**\n"
+              f'         Usage: {prefix}YN <Question>.\n',
         inline=False
     )
     msg.add_field(
@@ -159,9 +157,9 @@ async def help(ctx):
         value="delete is a command that's used to either delete a certain member's messages, or n amount of messages inside a channel.\n" +
                 "In order to use any of these feature, you'll have to use one of the two subcommands:\n" +
                 "   **1. msg: deletes n amount of messages.**\n" +
-                "         Usage: {}delete msg <number of messages>.\n".format(bot_prefix) +
+                f"         Usage: {prefix}delete msg <number of messages>.\n"+
                 "   **2. usermsg: deletes n amount of messages for a mentioned user.**\n"+
-                "         Usage: {}delete usermsg <mentioned user> <number of messages>.".format(bot_prefix),
+                f"         Usage: {prefix}delete usermsg <mentioned user> <number of messages>.",
         inline=False
     )
     msg.set_author(
@@ -184,10 +182,10 @@ if __name__ == "__main__":
     print("Loading modules....")
     for extension in startup_extensions:
         try:
-            bot.load_extension(extension)
+            bot.load_extension(f'cogs.{extension}')
         except Exception as e:
-            exc = '{}: {}'.format(type(e).__name__, e)
-            print('Failed to load extension {}\n{}'.format(extension, exc))
+            exc = f'{type(e).__name__}: {e}'
+            print(f'Failed to load extension {extension}\n{exc}')
     print("Connecting to Discord....")
 
-    bot.run(bot_token)
+    bot.run(token)
