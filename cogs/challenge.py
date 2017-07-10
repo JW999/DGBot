@@ -32,5 +32,12 @@ class challenge:
                         summ += i
         await ctx.send(summ)
 
+    @challenge0.error
+    async def chellenge0_error(self, ctx, error):
+        if isinstance(error, commands.errors.MissingRequiredArgument):
+            await ctx.send("Please check the help page for usage instructions.")
+        if isinstance(error, commands.errors.BadArgument):
+            await ctx.send("Wrong input format.")
+
 def setup(bot):
     bot.add_cog(challenge(bot))

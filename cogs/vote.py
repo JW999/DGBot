@@ -32,7 +32,6 @@ class vote:
 
     @vote.command()
     async def YN(self, ctx, *, question):
-        print(question)
         """A yes or no vote."""
         emojis = ['✅', '❌']
 
