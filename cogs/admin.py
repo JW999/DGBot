@@ -41,20 +41,10 @@ class admin:
 
     @delete.command()
     @commands.has_permissions(administrator=True)
-    async def msg(self, ctx, n :int):
-        """Deletes n messages for a mentioned user"""
-        number_messages = n
-
-        async for message in ctx.channel.history(limit=1000):
-            if ctx.message.id == message.id:
-                continue
-            if number_messages != 0:
-                number_messages -= 1
-                await message.delete()
-            else:
-                break
-
-        await ctx.message.delete()
+    async def msg(self, ctx, number_messages :int):
+        """Deletes n messages from a channel"""
+        number_messages += 1  # to account for the calling message
+        await ctx.channel.purge(limit=number_messages)
 
     @msg.error
     async def msg_error(ctx, error):
@@ -62,7 +52,6 @@ class admin:
             await ctx.send("Check the help page for usage instructions.")
         if isinstance(error, commands.errors.CheckFailure):
             await ctx.send("You're not an admin.")
-
 
 
 def setup(bot):
