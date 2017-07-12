@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+import random
+import asyncio
 
 
 class admin:
@@ -8,15 +10,17 @@ class admin:
         self.bot = bot
 
     @commands.group(invoke_without_command=True)
-    async def delete (self, ctx):
+    async def delete(self, ctx):
         await ctx.send("Check the help page for a list of subcommands")
 
     @delete.command()
     @commands.has_permissions(administrator=True)
-    async def usermsg(self, ctx, name: str, n: int):
+    async def usermsg(self, ctx, name: str, number_messages: int):
         """Delete n messages for a mentioned user"""
+        if number_messages < 1:
+            await ctx.send("Erm, what exactly am I exactly supposed to delete?")
+            return
         user = ctx.message.mentions[0]  # Get the mentioned user
-        number_messages = n
 
         async for message in ctx.channel.history(limit=1000):
             if ctx.message.id == message.id:
@@ -28,26 +32,29 @@ class admin:
                 else:
                     break
 
-
         await ctx.message.delete()
 
     @usermsg.error
-    async def usermsg_error(ctx, error):
-        if isinstance(error, commands.errors.BadArgument) or isinstance(error,commands.errors.MissingRequiredArgument) or isinstance(error, commands.errors.CommandInvokeError):
+    async def usermsg_error(self, ctx, error):
+        if isinstance(error, commands.errors.BadArgument) or isinstance(error, commands.errors.MissingRequiredArgument) or isinstance(error, commands.errors.CommandInvokeError):
             await ctx.send("Check the help page for usage instructions.")
         if isinstance(error, commands.errors.CheckFailure):
             await ctx.send("You're not an admin.")
-
 
     @delete.command()
     @commands.has_permissions(administrator=True)
     async def msg(self, ctx, number_messages :int):
         """Deletes n messages from a channel"""
-        number_messages += 1  # to account for the calling message
+        if number_messages < 1:
+            await ctx.send("Erm, what exactly am I exactly supposed to delete?")
+            return
+        number_messages += 2  # to account for the calling message
+        await ctx.send(file=discord.File(f"assets/Men-in-Black{random.randint(1, 3)}.png"))
+        await asyncio.sleep(2)
         await ctx.channel.purge(limit=number_messages)
 
     @msg.error
-    async def msg_error(ctx, error):
+    async def msg_error(self, ctx, error):
         if isinstance(error, commands.errors.BadArgument) or isinstance(error,commands.errors.MissingRequiredArgument) or isinstance(error, commands.errors.CommandInvokeError):
             await ctx.send("Check the help page for usage instructions.")
         if isinstance(error, commands.errors.CheckFailure):
