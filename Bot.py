@@ -1,7 +1,9 @@
 import discord
 from discord.ext import commands
 import json
-import time
+import subprocess
+import os
+import signal
 
 # Get top secret bot token
 with open("APIKey.json") as f:
@@ -22,6 +24,7 @@ startup_extensions = ["member",
 bot = commands.Bot(command_prefix=prefix, description=bot_description)
 bot.remove_command('help')
 
+
 @bot.event
 async def on_ready():
     print('Logged in as')
@@ -29,6 +32,15 @@ async def on_ready():
     print(bot.user.id)
     print('------')
     await bot.change_presence(game=discord.Game(name=f'Type {prefix}help'))
+    file_name = "pid.txt"
+    try:
+        pid = open(file_name, 'r').read()
+        os.kill(int(pid), signal.SIGKILL)
+        os.remove(file_name)
+    except FileNotFoundError:
+        pass
+
+
 
 @bot.command()
 @commands.is_owner()
@@ -36,6 +48,7 @@ async def load(ctx, extension_name :str):
     """Load an extension"""
     bot.load_extension(extension_name)
     await ctx.send(f"{extension_name} was successfully loaded.")
+
 
 @load.error
 async def load_error(ctx, error):
@@ -47,6 +60,7 @@ async def load_error(ctx, error):
     if isinstance(error, commands.errors.NotOwner):
         await ctx.send("You're not my daddy, only daddy can use this function.")
 
+
 @bot.command()
 @commands.is_owner()
 async def unload(ctx, extension_name :str):
@@ -57,11 +71,44 @@ async def unload(ctx, extension_name :str):
     else:
         await ctx.send(f"Could not unload {extension_name}, module not found.")
 
+
 @unload.error
 async def unload_error(ctx, error):
     """Handle load's errors"""
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Usage: {prefix}unload(<extension name>).")
+    if isinstance(error, commands.errors.NotOwner):
+        await ctx.send("You're not my daddy, only daddy can use this function.")
+
+
+@bot.command()
+@commands.is_owner()
+async def reload(ctx, extension_name :str):
+    """Reload a given cog"""
+    await unload(ctx, extension_name)
+    await load(ctx, extension_name)
+    await ctx.send(f"{extension} reloaded successfully.")
+
+
+@bot.command()
+@commands.is_owner()
+async def shutdown(ctx):
+    await ctx.send("Cya later o/")
+    await bot.logout()
+    exit(0)
+
+
+@bot.command()
+@commands.is_owner()
+async def update():
+    """Pull the newest updates from github"""
+    with open("pid.txt", 'w') as file:
+        file.write(str(os.getpid()))
+    subprocess.run("sh update.sh", shell=True)
+
+@update.error
+async def update_error(ctx, error):
+    """Handle update's errors"""
     if isinstance(error, commands.errors.NotOwner):
         await ctx.send("You're not my daddy, only daddy can use this function.")
 
