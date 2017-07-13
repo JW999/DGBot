@@ -45,12 +45,13 @@ class admin:
     @commands.has_permissions(administrator=True)
     async def msg(self, ctx, number_messages :int):
         """Deletes n messages from a channel"""
+        image_links = ["http://imgur.com/DmtZnH5", "http://imgur.com/p5eMbSj", "http://imgur.com/p5eMbSj"]
         if number_messages < 1:
             await ctx.send("Erm, what exactly am I exactly supposed to delete?")
             return
         number_messages += 2  # to account for the calling message
-        await ctx.send(file=discord.File(f"assets/Men-in-Black{random.randint(1, 3)}.png"))
-        await asyncio.sleep(2)
+        await ctx.send(image_links[random.randint(0, 2)])
+        await asyncio.sleep(1)
         await ctx.channel.purge(limit=number_messages)
 
     @msg.error

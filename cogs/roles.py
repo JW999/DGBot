@@ -5,15 +5,17 @@ import asyncio
 class roles:
     def __init__(self, bot):
         self.bot = bot
-        # Available roles
-        self.roles_list = ["C++", "C", "SFML", "OpenGL", "Python", "SDL", "Allegro", "ASM", "Java", "PHP"]
 
     @commands.group(invoke_without_command=True)
     async def roles(self, ctx):
-        s = "Available Roles:\n"
-        for role in self.roles_list:
-            s += f"{role}\n"
-        await ctx.send(s)
+        output_msg = "Available Roles:\n"
+
+        available_roles = open("assets/roles.txt", "r").readlines()
+
+        for role in available_roles:
+            output_msg += role
+
+        await ctx.send(output_msg)
 
     @roles.command()
     async def add(self, ctx, *roles_to_add):
@@ -22,10 +24,10 @@ class roles:
         for role in ctx.author.roles:
             user_roles.append(role.name.lower())
 
-        # Get a lowercase list of roles_list
-        available_roles = []
-        for role in self.roles_list:
-            available_roles.append(role.lower())
+        # Get the current list of available roles
+        available_roles = open("assets/roles.txt", "r").readlines()
+        # Remove whitespace and make all roles lower case.
+        available_roles = [role.lower().strip() for role in available_roles]
 
         if not roles_to_add:
             await ctx.send("Am I supposed to make a role out of thin air?")
@@ -82,8 +84,31 @@ class roles:
     @roles.command()
     @commands.has_permissions(administrator=True)
     async def addRole(self, ctx, *roles_to_add):
-        for role in roles_to_add:
-            self.roles_list.append(role)
+        """Add roles to the available_roles file"""
+        already_present_roles = []  # roles that will be deleted from "roles_to_add"
+
+        available_roles = open("assets/roles.txt", "r").readlines()
+        available_roles = [role.lower().strip() for role in available_roles]
+
+        output_msg = ""
+
+        for role_to_add in roles_to_add:
+            for role in available_roles:
+                if role_to_add.lower() == role:
+                    output_msg += f"Failed to add {role_to_add}: role already exists.\n"
+                    already_present_roles.append(role_to_add)
+                    break
+
+        for role in already_present_roles:
+            roles_to_add.remove(role)
+
+        if roles_to_add:
+            with open("assets/roles.txt", "a") as f:
+                for role in roles_to_add:
+                    f.write(f"{role}\n")
+                    output_msg += f"{role} has been successfully.\n"
+
+        await ctx.send(output_msg)
 
     @addRole.error
     async def addRole_error(self, ctx, error):
@@ -95,8 +120,39 @@ class roles:
     @roles.command()
     @commands.has_permissions(administrator=True)
     async def removeRole(self, ctx, *roles_to_remove):
-        for role in roles_to_remove:
-            self.roles_list.remove(role)
+        invalid_roles = []  # roles that will be deleted from "roles_to_remove"
+
+        available_roles = open("assets/roles.txt", "r").readlines()
+        available_roles = [role.lower().strip() for role in available_roles]
+
+        output_msg = ""
+
+        for role_to_remove in roles_to_remove:
+            if role_to_remove.lower() not in available_roles:
+                output_msg += f"{role_to_remove} is an invalid role.\n"
+                invalid_roles.append(role_to_remove)
+
+        for role in invalid_roles:
+            roles_to_remove.remove(role)
+
+        if roles_to_remove:
+            with open("assets/roles.txt", "r+") as f:
+                # Store lines in a buffer
+                lines = f.readlines()
+                # Remove lines from the buffer
+                for role in roles_to_remove:
+                    for line in lines:
+                        if role.lower() == line.lower().strip():
+                            lines.remove(line)
+                            output_msg += f"{role} has been removed successfully.\n"
+                            break
+                f.seek(0)
+                # Write the modified buffer
+                for line in lines:
+                    f.write(line)
+                f.truncate()
+
+        await ctx.send(output_msg)
 
     @removeRole.error
     async def removeRole_error(self, ctx, error):

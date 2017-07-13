@@ -95,7 +95,14 @@ async def reload(ctx, extension_name :str):
 async def shutdown(ctx):
     await ctx.send("Cya later o/")
     await bot.logout()
-    exit(0)
+    bot.loop.close()
+
+
+@shutdown.error
+async def shutdow_error(ctx, error):
+    """Handle shutdown's errors"""
+    if isinstance(error, commands.errors.NotOwner):
+        await ctx.send("You're not my daddy, only daddy can use this function.")
 
 
 @bot.command()
