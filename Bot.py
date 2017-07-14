@@ -39,6 +39,8 @@ async def on_ready():
         os.remove(file_name)
     except FileNotFoundError:
         pass
+    except ProcessLookupError:
+        pass
 
 
 
