@@ -45,7 +45,7 @@ class admin:
     @commands.has_permissions(administrator=True)
     async def msg(self, ctx, number_messages :int):
         """Deletes n messages from a channel"""
-        image_links = ["http://imgur.com/DmtZnH5", "http://imgur.com/p5eMbSj", "http://imgur.com/p5eMbSj"]
+        image_links = ["http://imgur.com/DmtZnH5", "http://imgur.com/p5eMbSj", "http://imgur.com/3QY3Bd2"]
         if number_messages < 1:
             await ctx.send("Erm, what exactly am I exactly supposed to delete?")
             return
