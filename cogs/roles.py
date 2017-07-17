@@ -106,7 +106,7 @@ class roles:
             with open("assets/roles.txt", "a") as f:
                 for role in roles_to_add:
                     f.write(f"{role}\n")
-                    output_msg += f"{role} has been successfully.\n"
+                    output_msg += f"{role} has been added successfully.\n"
 
         await ctx.send(output_msg)
 
