@@ -109,7 +109,7 @@ async def shutdow_error(ctx, error):
 
 @bot.command()
 @commands.is_owner()
-async def update():
+async def update(ctx):
     """Pull the newest updates from github"""
     with open("pid.txt", 'w') as file:
         file.write(str(os.getpid()))
