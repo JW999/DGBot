@@ -163,7 +163,7 @@ async def help(ctx):
         inline=False
     )
     msg.add_field(
-        name = "help:",
+        name="help:",
         value="Display this menu.\n",
         inline=False
     )
@@ -184,12 +184,12 @@ async def help(ctx):
                 "   **1. add: adds specified roles.**\n"+
                 f"       Usage: {prefix}roles add <roles>\n" +
                 "   **2. remove: removes specified roles.**\n" +
-                f"       Usage: {prefix}roles add <roles>\n",
+                f"       Usage: {prefix}roles remove <roles>\n",
         inline=False
     )
     msg.add_field(
-        name = "userinfo:",
-        value="Mention a user to get their Discord information."+
+        name="userinfo:",
+        value="Mention a user to get their Discord information." +
                 f"\nUsage: {prefix}userinfo <mentioned user>.\n",
         inline=False
     )
