@@ -5,15 +5,16 @@ class member:
     def __init__(self, bot):
         self.bot = bot
 
-    async def on_member_join(self, member):
-        msg = "Hello and welcome to the best C++/game dev server on Discord!!! {}".format(member.mention)
+    # The greeting message was disabled as requested.
+    #async def on_member_join(self, member):
+        #msg = "Hello and welcome to the best C++/game dev server on Discord!!! {}".format(member.mention)
 
-        for channel in member.guild.channels:
-            if channel.name == "welcome":
-                await channel.send(msg)
-                return
+        #for channel in member.guild.channels:
+            #if channel.name == "welcome":
+                #await channel.send(msg)
+                #return
         # not found
-        await member.guild.default_channel.send(msg)
+        #await member.guild.default_channel.send(msg)
 
 
     @commands.command()
