@@ -20,7 +20,8 @@ startup_extensions = ["member",
                       "challenge",
                       "misc",
                       "vote",
-                      "roles"]
+                      "roles",
+                      "mute"]
 bot = commands.Bot(command_prefix=prefix, description=bot_description)
 bot.remove_command('help')
 

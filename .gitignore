@@ -1,4 +1,8 @@
 .cache
 DGBot
 .gitignore
-.idea
+.idea0
+
+APIKey.json
+cogs/__pycache__
+update.sh
