@@ -1,0 +1,12 @@
+C++
+C
+SFML
+OpenGL
+Python
+SDL
+Allegro
+ASM
+Java
+PHP
+C#
+Wot++

@@ -4,7 +4,7 @@ import random
 import asyncio
 
 
-class admin:
+class admin(commands.Cog):
     """This class includes admin only commands"""
     def __init__(self, bot):
         self.bot = bot

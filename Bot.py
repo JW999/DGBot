@@ -12,7 +12,7 @@ with open("APIKey.json") as f:
 # Prefix used to interact with the bot
 prefix = "?"
 token = API['Token']
-bot_description = """An all-purpose bot written for the Hopson community server."""
+bot_description = """An all-purpose bot written for fun"""
 
 startup_extensions = ["member",
                       "rng",
@@ -32,7 +32,7 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    await bot.change_presence(game=discord.Game(name=f'Type {prefix}help'))
+    await bot.change_presence(activity=discord.Game(name=f'Type {prefix}help'))
     file_name = "pid.txt"
     try:
         pid = open(file_name, 'r').read()
@@ -220,12 +220,12 @@ async def help(ctx):
         inline=False
     )
     msg.set_author(
-        name="Hopbot",
+        name="someRandomصبي",
         icon_url="https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg",
         url="https://github.com/JW999/DGBot"
     )
     msg.set_footer(
-        text ="Made by JW999 and Jackojc. https://github.com/JW999/DGBot",
+        text ="Made by JW999(Husam Malkawi). https://github.com/JW999/DGBot",
         icon_url="https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg"
     )
     msg.set_thumbnail(

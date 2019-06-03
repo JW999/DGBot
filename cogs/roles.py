@@ -2,7 +2,7 @@ from discord.ext import commands
 import asyncio
 
 
-class roles:
+class roles(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

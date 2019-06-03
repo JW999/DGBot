@@ -5,7 +5,7 @@ import random
 import itertools
 import math
 
-class challenge:
+class challenge(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

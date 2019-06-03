@@ -1,7 +1,8 @@
 .cache
 DGBot
 .gitignore
-.idea0
+bot-env
+.idea
 
 APIKey.json
 cogs/__pycache__
