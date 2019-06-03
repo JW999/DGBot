@@ -1,4 +1,4 @@
-import aiohttp
+from .helpers import filedownloader
 import asyncio
 import async_timeout
 import discord
@@ -16,17 +16,6 @@ class misc(commands.Cog):
     async def img(self, ctx):
         await ctx.send("Please refer to the help command for a list of subcommands.")
 
-    async def download_img(self, ctx, url, name):
-        """Downloads an img from passed url."""
-        with async_timeout.timeout(10):
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url) as r:
-                    if r.status == 200:
-                        with open(name, 'wb') as fp:
-                            fp.write(await r.read())
-                    else:
-                        await ctx.send("Failed to download image.")
-
     @img.command()
     async def invert(self, ctx, url :str):
         if not ctx.message.mentions:
@@ -40,7 +29,7 @@ class misc(commands.Cog):
         # Download the image
         img_name = "{}.png".format(url[url.rfind("/")+1:url.rfind(".")])
         try:
-            await self.download_img(ctx, url, img_name)
+            await filedownloader.save_file(ctx, url, img_name)
         except asyncio.TimeoutError:
             await ctx.send("Image is too big.")
             os.remove(img_name)
@@ -88,5 +77,32 @@ class misc(commands.Cog):
             await ctx.send("Are you expecting me to make an image out of thin air?")
 
 
+class memes(commands.Cog):
+    """A class that sends memes from reddit, maybe bobs later."""
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.group(invoke_without_command=True)
+    async def memes(self, ctx):
+        await ctx.send("I still haven't added commands to the help page, as Husam about them.")
+
+    @memes.command()
+    async def topDank(self, ctx):
+        """Downloads the top meme of the day from /r/dankmemes"""
+        name = "top.json"
+        url = "https://www.reddit.com/r/dankmemes/top.json"
+
+        try:
+            redditData = await filedownloader.download_file(ctx, url)
+        except asyncio.TimeoutError:
+            await ctx.send("A connection error has occured.")
+            return
+        
+
+
+
+
+
 def setup(bot):
     bot.add_cog(misc(bot))
+    bot.add_cog(memes(bot))

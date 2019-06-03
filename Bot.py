@@ -20,8 +20,7 @@ startup_extensions = ["member",
                       "challenge",
                       "misc",
                       "vote",
-                      "roles",
-                      "mute"]
+                      "roles",]
 bot = commands.Bot(command_prefix=prefix, description=bot_description)
 bot.remove_command('help')
 
@@ -49,6 +48,7 @@ async def on_ready():
 @commands.is_owner()
 async def load(ctx, extension_name :str):
     """Load an extension"""
+    print(extension_name)
     bot.load_extension(extension_name)
     await ctx.send(f"{extension_name} was successfully loaded.")
 
@@ -80,6 +80,8 @@ async def unload_error(ctx, error):
     """Handle load's errors"""
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Usage: {prefix}unload(<extension name>).")
+    if isinstance(error, commands.errors.CommandInvokeError):
+        await ctx.send("Module not found.")
     if isinstance(error, commands.errors.NotOwner):
         await ctx.send("You're not my daddy, only daddy can use this function.")
 
@@ -88,9 +90,19 @@ async def unload_error(ctx, error):
 @commands.is_owner()
 async def reload(ctx, extension_name :str):
     """Reload a given cog"""
-    await unload(ctx, extension_name)
-    await load(ctx, extension_name)
-    await ctx.send(f"{extension} reloaded successfully.")
+    try:
+        await bot.reload_extension(extension_name)
+        await ctx.send(f"{extension_name} was successfully reloaded.")
+    except Exception as e:
+        exc = f'{type(e).__name__}: {e}'
+        print(f'Failed to load extension {extension}\n{exc}')
+        await ctx.send(f'Failed to load extension {extension}\n{exc}')
+    #except ExtensionNotLoaded:
+       # await ctx.send("Extension was not loaded.")
+    #except ExtensionNotFound:
+       # await ctx.send("Extension was not found.")
+    #except ExtensionFailed :
+        #await ctx.send("Extension had an execution error.")
 
 
 @bot.command()
@@ -225,7 +237,7 @@ async def help(ctx):
         url="https://github.com/JW999/DGBot"
     )
     msg.set_footer(
-        text ="Made by JW999(Husam Malkawi). https://github.com/JW999/DGBot",
+        text ="Made by JW999. https://github.com/JW999/DGBot",
         icon_url="https://cdn.pixabay.com/photo/2016/08/29/08/54/camel-1627701_960_720.jpg"
     )
     msg.set_thumbnail(
