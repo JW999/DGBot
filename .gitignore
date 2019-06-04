@@ -1,9 +1,0 @@
-.cache
-DGBot
-.gitignore
-bot-env
-.idea
-
-APIKey.json
-cogs/__pycache__
-update.sh
