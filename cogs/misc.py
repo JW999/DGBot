@@ -98,9 +98,6 @@ class memes(commands.Cog):
             await ctx.send("A connection error has occured.")
             return
 
-        #first_post = redditData[0]['data']
-        #image_url = first_post['url']
-        #redditData = json.loads(json.dumps(redditData))
         img_url = redditData['data']['children'][0]['data']['url']
 
         img_name = "{}.png".format(img_url[img_url.rfind("/")+1:img_url.rfind(".")])
@@ -123,3 +120,7 @@ class memes(commands.Cog):
 def setup(bot):
     bot.add_cog(misc(bot))
     bot.add_cog(memes(bot))
+
+def teardown(bot):
+    bot.remove_cog(misc(bot))
+    bot.remove_cog(memes(bot))

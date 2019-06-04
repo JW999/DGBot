@@ -64,3 +64,7 @@ class admin(commands.Cog):
 
 def setup(bot):
     bot.add_cog(admin(bot))
+
+def teardown(bot):
+    bot.remove_cog(admin(bot))
+

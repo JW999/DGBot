@@ -164,3 +164,6 @@ class roles(commands.Cog):
 
 def setup(bot):
     bot.add_cog(roles(bot))
+
+def teardown(bot):
+    bot.remove_cog(roles(bot))

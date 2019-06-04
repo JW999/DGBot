@@ -41,3 +41,6 @@ class challenge(commands.Cog):
 
 def setup(bot):
     bot.add_cog(challenge(bot))
+
+def teardown(bot):
+    bot.remove_cog(challenge(bot))

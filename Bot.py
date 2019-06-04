@@ -48,7 +48,7 @@ async def on_ready():
 @commands.is_owner()
 async def load(ctx, extension_name :str):
     """Load an extension"""
-    bot.load_extension(extension_name)
+    bot.load_extension(f'cogs.{extension}')
     await ctx.send(f"{extension_name} was successfully loaded.")
 
 
@@ -58,7 +58,7 @@ async def load_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Usage: {prefix}load(<extension name>).")
     if isinstance(error, commands.errors.CommandInvokeError):
-        await ctx.send("Module not found.")
+        await ctx.send("Check the Traceback.")
     if isinstance(error, commands.errors.NotOwner):
         await ctx.send("You're not my daddy, only daddy can use this function.")
 
@@ -66,8 +66,8 @@ async def load_error(ctx, error):
 @bot.command()
 @commands.is_owner()
 async def unload(ctx, extension_name :str):
-    if bot.get_cog(extension_name[extension_name.rfind(".")+1:]):
-        bot.unload_extension(extension_name)
+    if bot.get_cog(extension):
+        bot.unload_extension(f'cogs.{extension}')
         await ctx.send(f"{extension_name} was successfully unloaded.")
 
     else:
@@ -80,7 +80,7 @@ async def unload_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Usage: {prefix}unload(<extension name>).")
     if isinstance(error, commands.errors.CommandInvokeError):
-        await ctx.send("Module not found.")
+        await ctx.send("Check the Traceback.")
     if isinstance(error, commands.errors.NotOwner):
         await ctx.send("You're not my daddy, only daddy can use this function.")
 
@@ -90,18 +90,13 @@ async def unload_error(ctx, error):
 async def reload(ctx, extension_name :str):
     """Reload a given cog"""
     try:
-        await bot.reload_extension(extension_name)
+        bot.reload_extension(f'cogs.{extension_name}')
         await ctx.send(f"{extension_name} was successfully reloaded.")
-    except Exception as e:
-        exc = f'{type(e).__name__}: {e}'
+    except Exception as exp:
+        exc = f'{type(exp).__name__}: {exp}'
         print(f'Failed to load extension {extension}\n{exc}')
         await ctx.send(f'Failed to load extension {extension}\n{exc}')
-    #except ExtensionNotLoaded:
-       # await ctx.send("Extension was not loaded.")
-    #except ExtensionNotFound:
-       # await ctx.send("Extension was not found.")
-    #except ExtensionFailed :
-        #await ctx.send("Extension had an execution error.")
+
 
 
 @bot.command()

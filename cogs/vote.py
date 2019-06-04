@@ -48,3 +48,6 @@ class vote(commands.Cog):
 
 def setup(bot):
     bot.add_cog(vote(bot))
+
+def teardown(bot):
+    bot.remove_cog(vote(bot))

@@ -67,3 +67,6 @@ class member(commands.Cog):
 
 def setup(bot):
     bot.add_cog(member(bot))
+
+def teardown(bot):
+    bot.remove_cog(member(bot))
