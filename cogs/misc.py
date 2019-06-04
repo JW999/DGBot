@@ -6,7 +6,7 @@ from discord.ext import commands
 import os
 from PIL import Image
 from PIL import ImageOps
-
+import json
 
 class misc(commands.Cog):
     def __init__(self, bot):
@@ -29,7 +29,7 @@ class misc(commands.Cog):
         # Download the image
         img_name = "{}.png".format(url[url.rfind("/")+1:url.rfind(".")])
         try:
-            await filedownloader.save_file(ctx, url, img_name)
+            await filedownloader.save_file(url, img_name)
         except asyncio.TimeoutError:
             await ctx.send("Image is too big.")
             os.remove(img_name)
@@ -93,11 +93,28 @@ class memes(commands.Cog):
         url = "https://www.reddit.com/r/dankmemes/top.json"
 
         try:
-            redditData = await filedownloader.download_file(ctx, url)
+            redditData = await filedownloader.download_json_file(url)
         except asyncio.TimeoutError:
             await ctx.send("A connection error has occured.")
             return
-        
+
+        #first_post = redditData[0]['data']
+        #image_url = first_post['url']
+        #redditData = json.loads(json.dumps(redditData))
+        img_url = redditData['data']['children'][0]['data']['url']
+
+        img_name = "{}.png".format(img_url[img_url.rfind("/")+1:img_url.rfind(".")])
+        try:
+            await filedownloader.save_file(img_url, img_name)
+        except asyncio.TimeoutError:
+            await ctx.send("Image is too big.")
+            os.remove(img_name)
+            return
+        except ValueError:
+            await ctx.send("Invalid link.")
+            return
+        await ctx.channel.send(file=discord.File(img_name))
+        os.remove(img_name)
 
 
 

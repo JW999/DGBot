@@ -48,7 +48,6 @@ async def on_ready():
 @commands.is_owner()
 async def load(ctx, extension_name :str):
     """Load an extension"""
-    print(extension_name)
     bot.load_extension(extension_name)
     await ctx.send(f"{extension_name} was successfully loaded.")
 
