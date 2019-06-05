@@ -10,7 +10,6 @@ async def save_file(url:str, dataType:str, filename:str):
     try:
         if dataType == 'binary':
             with open(f"{filename}", "wb") as f:
-                print(filename)
                 f.write(downloadedData)
         elif dataType == 'text':
             with open(f"{filename}.txt", "w") as f:
