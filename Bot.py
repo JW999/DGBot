@@ -6,12 +6,12 @@ import os
 import signal
 
 # Get top secret bot token
-with open("APIKey.json") as f:
+with open("data.json") as f:
     API = json.load(f)
 
 # Prefix used to interact with the bot
 prefix = "?"
-token = API['Token']
+token = API['DiscordAPIToken']
 bot_description = """An all-purpose bot written for fun"""
 
 startup_extensions = ["member",
