@@ -48,13 +48,14 @@ async def on_ready():
 @commands.is_owner()
 async def load(ctx, extension_name :str):
     """Load an extension"""
-    bot.load_extension(f'cogs.{extension}')
+    bot.load_extension(f'cogs.{extension_name}')
     await ctx.send(f"{extension_name} was successfully loaded.")
 
 
 @load.error
 async def load_error(ctx, error):
     """Handle load's errors"""
+    print(error)
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Usage: {prefix}load(<extension name>).")
     if isinstance(error, commands.errors.CommandInvokeError):
@@ -66,24 +67,19 @@ async def load_error(ctx, error):
 @bot.command()
 @commands.is_owner()
 async def unload(ctx, extension_name :str):
-    if bot.get_cog(extension):
-        bot.unload_extension(f'cogs.{extension}')
-        await ctx.send(f"{extension_name} was successfully unloaded.")
-
-    else:
-        await ctx.send(f"Could not unload {extension_name}, module not found.")
-
+    bot.unload_extension(f'cogs.{extension_name}')
 
 @unload.error
 async def unload_error(ctx, error):
-    """Handle load's errors"""
+    """Handle unload's errors"""
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Usage: {prefix}unload(<extension name>).")
-    if isinstance(error, commands.errors.CommandInvokeError):
-        await ctx.send("Check the Traceback.")
     if isinstance(error, commands.errors.NotOwner):
         await ctx.send("You're not my daddy, only daddy can use this function.")
-
+    if isinstance(error.original, commands.errors.ExtensionNotLoaded):
+        await ctx.send(f"ERROR: Extension is not loaded.")
+    if isinstance(error.original, commands.errors.CommandInvokeError):
+        await ctx.send("Check the Traceback.")
 
 @bot.command()
 @commands.is_owner()
