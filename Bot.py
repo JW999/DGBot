@@ -17,7 +17,7 @@ bot_description = """An all-purpose bot written for fun"""
 startup_extensions = ["member",
                       "rng",
                       "admin",
-                      "test",
+                      "misc",
                       "vote",
                       "roles",]
 bot = commands.Bot(command_prefix=prefix, description=bot_description)
