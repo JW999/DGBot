@@ -17,8 +17,7 @@ bot_description = """An all-purpose bot written for fun"""
 startup_extensions = ["member",
                       "rng",
                       "admin",
-                      "challenge",
-                      "misc",
+                      "test",
                       "vote",
                       "roles",]
 bot = commands.Bot(command_prefix=prefix, description=bot_description)
@@ -90,8 +89,8 @@ async def reload(ctx, extension_name :str):
         await ctx.send(f"{extension_name} was successfully reloaded.")
     except Exception as exp:
         exc = f'{type(exp).__name__}: {exp}'
-        print(f'Failed to load extension {extension}\n{exc}')
-        await ctx.send(f'Failed to load extension {extension}\n{exc}')
+        print(f'Failed to load extension {extension_name}\n{exc}')
+        await ctx.send(f'Failed to load extension {extension_name}\n{exc}')
 
 
 
@@ -135,7 +134,7 @@ async def hello(ctx):
 async def help(ctx):
     """Display a message with the latest changelog and current commands."""
     msg = discord.Embed(
-        title="Welcome to HopBot's help page!",
+        title="Welcome to afthalBot help page!",
         colour=discord.Color.red(),
         description="\nChangelog:\n"
                       "\n1. Fixed a bug were I was greeting users in the wrong channel.\n"
