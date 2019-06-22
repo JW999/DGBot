@@ -1,4 +1,5 @@
 from .helpers import filedownloader
+from .helpers import jsonTest
 import asyncio
 import async_timeout
 import discord
@@ -8,6 +9,8 @@ from PIL import Image
 from PIL import ImageOps
 import json
 import praw
+import random
+
 
 class misc(commands.Cog):
     def __init__(self, bot):
@@ -77,19 +80,6 @@ class misc(commands.Cog):
         if isinstance(error, commands.errors.MissingRequiredArgument):
             await ctx.send("Are you expecting me to make an image out of thin air?")
 
-
-from .helpers import filedownloader
-from .helpers import jsonTest
-import asyncio
-import async_timeout
-import discord
-from discord.ext import tasks, commands
-import os
-from PIL import Image
-from PIL import ImageOps
-import json
-import praw
-import random
 
 class InvalidLinkError(Exception):
     pass
